@@ -1,3 +1,5 @@
+package com.leonard.blockchain;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
@@ -16,7 +18,7 @@ public class Block {
     private final String hash;
 
     /**
-     * Constructs a Block with the specified parameters.
+     * Constructs a com.leonard.blockchain.Block with the specified parameters.
      *
      * @param index        The index of the block in the blockchain. Must not be negative.
      * @param timestamp    The timestamp indicating when the block was created.

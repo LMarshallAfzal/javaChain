@@ -1,3 +1,6 @@
+import com.leonard.blockchain.Block;
+import com.leonard.blockchain.BlockChain;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
