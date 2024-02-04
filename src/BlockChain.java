@@ -36,7 +36,11 @@ public class BlockChain {
                                 !lastBlock.getHash().equals(newBlock.getPreviousHash()) ||
                                 !isValidHash(newBlock)
                 ) {
-                    throw new IllegalArgumentException("Invalid block. Unable to add to the chain.");
+                    String errorMessage = "Invalid block. Unable to add to the chain. Details:\n +" +
+                            "Index check: " + (lastBlock.getIndex() + 1 != newBlock.getIndex()) + "\n" +
+                            "Hash check: " + !lastBlock.getHash().equals(newBlock.getPreviousHash()) + "\n" +
+                            "Valid hash check: " + !isValidHash(newBlock);
+                    throw new IllegalArgumentException(errorMessage);
                 }
                 chain.add(newBlock);
             } catch (IndexOutOfBoundsException e) {

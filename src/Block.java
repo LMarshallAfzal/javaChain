@@ -23,12 +23,11 @@ public class Block {
      *                    Should be in the format: yyyy-MM-ddTHH:mm:ss.
      * @param data         The data stored in the block.
      * @param previousHash The hash of the previous block in the blockchain.
-     * @param hash         The hash of the current block.
      * @throws IllegalArgumentException If the index is negative or the timestamp has an invalid format.
      */
-    public Block(int index, String timestamp, String data, String previousHash, String hash) {
+    public Block(int index, String timestamp, String data, String previousHash) {
         // Validation checks
-        if (index > 0) {
+        if (index < 0) {
             throw new IllegalArgumentException("Index cannot be negative.");
         }
 
@@ -41,7 +40,7 @@ public class Block {
         this.index = index;
         this.data = data;
         this.previousHash = previousHash;
-        this.hash = hash;
+        this.hash = calculateHash();
     }
 
     /**

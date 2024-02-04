@@ -1,15 +1,30 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        // Creating a blockchain
+        BlockChain blockchain = new BlockChain();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        // Adding blocks to the blockchain
+        try {
+            Block block1 = new Block(1, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")), "Transaction 1", "0");
+            blockchain.addBlock(block1);
+
+            Block block2 = new Block(2, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")), "Transaction 2", block1.getHash());
+            blockchain.addBlock(block2);
+
+            Block block3 = new Block(3, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")), "Transaction 3", block2.getHash());
+            blockchain.addBlock(block3);
+        } catch (IllegalArgumentException e) {
+            System.err.println("Error: " + e.getMessage());
         }
+
+        // Displaying the blockchain
+        blockchain.displayBlockchain();
+
+        // Checking if the blockchain is valid
+        boolean isChainValid = blockchain.isChainValid();
+        System.out.println("Is Blockchain Valid? " + isChainValid);
     }
 }
