@@ -7,7 +7,7 @@ blockchains, including blocks, hashing, and decentralization.
 
 ## Features ##
 
-- **com.leonard.blockchain.Block Structure:** Each block in JavaChain consists of an index, data,
+- **Structure:** Each block in JavaChain consists of an index, data,
 previous hash, and a unique hash calculated using a cryptographic hash function.
 - **Blockchain management:** The blockchain class manages the creation of blocks,
 ensuring the integrity of the chain through hash validation and linking.

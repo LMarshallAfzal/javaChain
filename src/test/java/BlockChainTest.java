@@ -1,5 +1,3 @@
-package com.leonard.test;
-
 import com.leonard.blockchain.Block;
 import com.leonard.blockchain.BlockChain;
 import org.junit.Test;

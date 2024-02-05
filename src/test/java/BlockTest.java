@@ -1,5 +1,3 @@
-package com.leonard.test;
-
 import com.leonard.blockchain.Block;
 import java.time.LocalDateTime;
 import org.junit.Test;

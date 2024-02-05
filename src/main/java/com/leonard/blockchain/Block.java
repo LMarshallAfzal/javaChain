@@ -1,6 +1,5 @@
 package com.leonard.blockchain;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.security.MessageDigest;
@@ -36,13 +35,31 @@ public class Block {
         try {
             this.timestamp = LocalDateTime.parse(timestamp);
         } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Invalid timestamp format. Expected format: yyyy-MM-ddTHH:mm:ss");
+            throw new IllegalArgumentException("Invalid timestamp format. Expected format: yyyy-MM-ddTHH:mm:ss", e);
         }
 
         this.index = index;
         this.data = data;
         this.previousHash = previousHash;
         this.hash = calculateHash();
+    }
+
+    public Block(int index, String timestamp, String data, String previousHash, String hash) {
+        // Validation checks
+        if (index < 0) {
+            throw new IllegalArgumentException("Index cannot be negative.");
+        }
+
+        try {
+            this.timestamp = LocalDateTime.parse(timestamp);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid timestamp format. Expected format: yyyy-MM-ddTHH:mm:ss", e);
+        }
+
+        this.index = index;
+        this.data = data;
+        this.previousHash = previousHash;
+        this.hash = hash;
     }
 
     /**
