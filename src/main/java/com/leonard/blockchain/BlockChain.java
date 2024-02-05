@@ -144,7 +144,7 @@ public class BlockChain {
      * @param block The block to check.
      * @return True if the hash is valid, false otherwise.
      */
-    private boolean isValidHash(Block block) {
+    public boolean isValidHash(Block block) {
         try {
             String calculatedHash = block.calculateHash();
             return calculatedHash.equals(block.getHash());

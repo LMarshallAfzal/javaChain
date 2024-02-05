@@ -53,4 +53,34 @@ public class BlockChainTest {
         blockchain.displayBlockchain();
     }
 
+    @Test
+    public void testCreateTableIfNotExists() {
+        BlockChain blockChain = new BlockChain();
+        blockChain.createTableIfNotExists();
+        Block block = new Block(1, "2022-01-01T12:00:00", "Transaction 1", "0");
+        blockChain.addBlock(block);
+        blockChain.saveToDatabase(block);
+        blockChain.loadFromDatabase();
+        assertTrue(blockChain.isChainValid());
+    }
+
+    @Test
+    public void testLoadJdbcDriver() {
+        BlockChain blockChain = new BlockChain();
+        blockChain.loadJdbcDriver();
+    }
+
+    @Test
+    public void testSaveAndLoadFromDatabase() {
+        BlockChain blockChain = new BlockChain();
+        Block block1 = new Block(1, "2022-01-01T12:00:00", "Transaction 1", "0");
+        Block block2 = new Block(2, "2022-01-02T14:30:00", "Transaction 2", block1.getHash());
+        blockChain.addBlock(block1);
+        blockChain.addBlock(block2);
+        blockChain.saveToDatabase(block1);
+        blockChain.saveToDatabase(block2);
+        blockChain.loadFromDatabase();
+        assertTrue(blockChain.isChainValid());
+    }
+
 }
