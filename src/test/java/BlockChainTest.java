@@ -41,6 +41,7 @@ public class BlockChainTest {
         assertFalse(blockchain.isChainValid());
     }
 
+
     @Test
     public void testDisplayBlockchain() {
         BlockChain blockchain = new BlockChain();

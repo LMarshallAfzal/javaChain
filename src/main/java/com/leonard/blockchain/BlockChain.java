@@ -97,18 +97,44 @@ public class BlockChain {
      * @param block The block to be saved to the database.
      */
     public void saveToDatabase(Block block) {
-        try (Connection connection = DriverManager.getConnection(DATABASE_URL); PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO blocks (block_index, timestamp, data, previous_hash, hash) VALUES (?, ?, ?, ?, ?)")) {
-            statement.setInt(1, block.getIndex());
-            statement.setString(2, block.getTimestamp().toString());
-            statement.setString(3, block.getData());
-            statement.setString(4, block.getPreviousHash());
-            statement.setString(5, block.getHash());
-            statement.executeUpdate();
 
-            logger.log(Level.INFO, "New block has been saved to the database.");
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL)) {
+            if (blockExistsInDatabase(connection, block.getIndex())) {
+                logger.log(Level.WARNING, "Block with index " + block.getIndex() + " already exists in the database. Skipped insertion");
+                return;
+            }
+
+
+             try (PreparedStatement statement = connection.prepareStatement(
+                     "INSERT INTO blocks (block_index, timestamp, data, previous_hash, hash) VALUES (?, ?, ?, ?, ?)")) {
+                 statement.setInt(1, block.getIndex());
+                 statement.setString(2, block.getTimestamp().toString());
+                 statement.setString(3, block.getData());
+                 statement.setString(4, block.getPreviousHash());
+                 statement.setString(5, block.getHash());
+                 statement.executeUpdate();
+
+                 logger.log(Level.INFO, "New block has been saved to the database.");
+             }
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error inserting values into the database", e);
+        }
+    }
+
+    /**
+     * Checks whether a block with a given index already exists in the database.
+     *
+     * @param connection The database connection.
+     * @param blockIndex blockIndex The index of the block to check.
+     * @return {@code true} if a block with the same index exists in the database, {@code false} otherwise.
+     * @throws SQLException SQLException if a database error occurs.
+     */
+    private boolean blockExistsInDatabase(Connection connection, int blockIndex) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT 1 FROM blocks WHERE block_index = ?")) {
+            statement.setInt(1, blockIndex);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
         }
     }
 
